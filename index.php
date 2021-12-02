@@ -16,44 +16,51 @@
 
 // Fonction de calcul suivant le mot renseigné et le nombre de point attribué à chaque lettre
 function countScore($word)
-{   
+{   // On crée un tableau associatif lettre => point
+    $pointsPerLetter = [
+        'A' => 1,
+        'B' => 3,
+        'C' => 3,
+        'D' => 2,
+        'E' => 1,
+        'F' => 4,
+        'G' => 2,
+        'H' => 4,
+        'I' => 1,
+        'J' => 8,
+        'K' => 10,
+        'L' => 1,
+        'M' => 2,
+        'N' => 1,
+        'O' => 1,
+        'P' => 3,
+        'Q' => 8,
+        'R' => 1,
+        'S' => 1,
+        'T' => 1,
+        'U' => 1,
+        'V' => 4,
+        'W' => 10,
+        'X' => 10,
+        'Y' => 10,
+        'Z' => 10,
+    ];
+
     // De base, le score vaut 0 points
     $score = 0;
 
     // On crée un tableau à partir des lettres du mot renseigné
-    $uppercaseWord = strtoupper($_GET ['word']);
+    $uppercaseWord = strtoupper($_GET['word']);
     $word = str_split($uppercaseWord, 1);
     // var_dump($word);
     
-    // On vérifie chaque lettre du mot présente dans le tableau et on ajoute sa valeur au score
-    foreach ($word as $i => $letter) {
-        if (($letter == 'A') || ($letter == 'E') || ($letter == 'I') || ($letter == 'L') || ($letter == 'N') || ($letter == 'O') || ($letter == 'R') || ($letter == 'S') || ($letter == 'T') || ($letter == 'U')) {
-
-            $score = $score + 1;
-
-        } elseif (($letter == 'D') || ($letter == 'G') || ($letter == 'M')) {
-
-            $score = $score + 2;
-
-        } elseif (($letter == 'B') || ($letter == 'C') || ($letter == 'P')) {
-
-            $score = $score + 3;
-
-        } elseif (($letter == 'F') || ($letter == 'H') || ($letter == 'V')) {
-
-            $score = $score + 4;
-
-        } elseif (($letter == 'J') || ($letter == 'Q')) {
-
-            $score = $score + 8;
-
-        } elseif (($letter == 'K') || ($letter == 'W') || ($letter == 'X') || ($letter == 'Y') || ($letter == 'Z')) {
-
-            $score = $score + 10;
-
-        } 
-
+    // On vérifie chaque lettre du mot présente comme clé dans le tableau et on ajoute sa valeur au score
+    foreach ($word as $letter) {
+        if (array_key_exists($letter, $pointsPerLetter)) {
+            $score = $score + $pointsPerLetter[$letter];
+        }
     };
+    // var_dump($score);
 
     // On vérifie ensuite si une lettre est renseignée comme double et ou triple et on multiplie de temps si besoin
 /*     if () { 
