@@ -21,38 +21,57 @@ function countScore($word)
     $score = 0;
 
     // On crée un tableau à partir des lettres du mot renseigné
-    $word = str_split($_GET['word'], 1);
-    //var_dump($word);
+    $uppercaseWord = strtoupper($_GET ['word']);
+    $word = str_split($uppercaseWord, 1);
+    // var_dump($word);
     
     // On vérifie chaque lettre du mot présente dans le tableau et on ajoute sa valeur au score
     foreach ($word as $i => $letter) {
-        if (($letter == 'a') || ($letter == 'A') || ($letter == 'e') || ($letter == 'E') || ($letter == 'i') || ($letter == 'I') || ($letter == 'l') || ($letter == 'L') || ($letter == 'n') || ($letter == 'N') || ($letter == 'o') || ($letter == 'O') || ($letter == 'r') || ($letter == 'R') || ($letter == 's') || ($letter == 'S') ||($letter == 't') || ($letter == 'T') ||($letter == 'u') || ($letter == 'U')) {
+        if (($letter == 'A') || ($letter == 'E') || ($letter == 'I') || ($letter == 'L') || ($letter == 'N') || ($letter == 'O') || ($letter == 'R') || ($letter == 'S') || ($letter == 'T') || ($letter == 'U')) {
 
             $score = $score + 1;
 
-        } elseif (($letter == 'd') || ($letter == 'D') || ($letter == 'g') || ($letter == 'G') || ($letter == 'm') || ($letter == 'M')) {
+        } elseif (($letter == 'D') || ($letter == 'G') || ($letter == 'M')) {
 
             $score = $score + 2;
 
-        } elseif (($letter == 'b') || ($letter == 'B') || ($letter == 'c') || ($letter == 'C') || ($letter == 'p') || ($letter == 'P')) {
+        } elseif (($letter == 'B') || ($letter == 'C') || ($letter == 'P')) {
 
             $score = $score + 3;
 
-        } elseif (($letter == 'f') || ($letter == 'F') || ($letter == 'h') || ($letter == 'H') || ($letter == 'v') || ($letter == 'V')) {
+        } elseif (($letter == 'F') || ($letter == 'H') || ($letter == 'V')) {
 
             $score = $score + 4;
 
-        } elseif (($letter == 'j') || ($letter == 'J') || ($letter == 'q') || ($letter == 'Q')) {
+        } elseif (($letter == 'J') || ($letter == 'Q')) {
 
             $score = $score + 8;
 
-        } elseif (($letter == 'k') || ($letter == 'K') || ($letter == 'w') || ($letter == 'W') || ($letter == 'x') || ($letter == 'X') || ($letter == 'y') || ($letter == 'Y') || ($letter == 'z') || ($letter == 'Z')) {
+        } elseif (($letter == 'K') || ($letter == 'W') || ($letter == 'X') || ($letter == 'Y') || ($letter == 'Z')) {
 
             $score = $score + 10;
 
         } 
 
     };
+
+    // On vérifie ensuite si une lettre est renseignée comme double et ou triple et on multiplie de temps si besoin
+/*     if () { 
+        ;
+    } elseif () {
+        ;
+    } else {
+        ;
+    } */
+
+    // On vérifie enfin si le mot compte double ou triple et on multiplie de tant si besoin
+    if (isset($_GET['doubleWord'])) {
+        $score = $score*2;
+    } elseif (isset($_GET['tripleWord'])) {
+        $score = $score*3;
+    } else {
+        $score = $score;
+    }
 
     // On retourne le score
     return $score;
@@ -79,9 +98,36 @@ if (!empty($_GET['word'])) {
 <form id="form" action="" method="get"> 
     <div class="form-row">
         <p>Combien de points pour
+            <!-- On renseigne le mot -->
             <input type="text" id="word" name="word" value="Votre mot" minlenght="2" maxlenght="15" required>
-         ?</p>
+         ?</p>        
+    </div>
 
+    <div id="extras">
+        <!-- On précise si
+        une lettre compte double -->
+        <div>
+            <label for="doubleLettre">Lettre compte double</label>
+            <input type="text" id="doubleLetter" name="doubleLetter" maxlength="1" size="1" value="?">
+        </div>
+
+        <!-- une lettre compte triple -->
+        <div>
+            <label for="tripleLettre">Lettre compte triple</label>
+            <input type="text" id="tripleLetter" name="tripleLetter" maxlength="1" size="1" value="?">
+        </div>
+
+        <!-- le mot compte douple -->
+        <div>
+            <label for="doubleWord">Mot compte double</label>
+            <input type="checkbox" id="doubleWord" name="doubleWord">
+        </div>
+
+        <!-- le mot compte triple -->
+        <div>
+            <label for="tripleWord">Mot compte triple</label>
+            <input type="checkbox" id="tripleWord" name="tripleWord">
+        </div>
     </div>
 
     <button id="submit-form" type="submit">Aller compte!</button>
