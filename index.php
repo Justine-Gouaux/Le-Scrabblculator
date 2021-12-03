@@ -62,14 +62,28 @@ function countScore($word)
     };
     // var_dump($score);
 
-    // On vérifie ensuite si une lettre est renseignée comme double et ou triple et on multiplie de temps si besoin
-/*     if () { 
-        ;
-    } elseif () {
-        ;
-    } else {
-        ;
-    } */
+    // On vérifie ensuite si une lettre est renseignée comme double et ou tripl
+    $uppercaseDL = strtoupper($_GET['doubleLetter']);
+    $doubleLetters = str_split($uppercaseDL, 1);
+    foreach ($doubleLetters as $DL) {
+        if (isset($_GET['doubleLetter']) && array_key_exists($DL, $pointsPerLetter)) {
+            $score = $score + $pointsPerLetter[$DL];
+        }
+    }
+
+    $uppercaseTL = strtoupper($_GET['tripleLetter']);
+    $tripleLetters = str_split($uppercaseTL, 1);
+    foreach ($tripleLetters as $TL) {
+        if (isset($_GET['tripleLetter']) && array_key_exists($TL, $pointsPerLetter)) {
+            $score = $score + ($pointsPerLetter[$TL] * 2);
+        }
+    }
+    
+    // var_dump($_GET['doubleLetter']);
+    // var_dump($uppercaseDL);
+    // var_dump($_GET['tripleLetter']);
+    // var_dump($uppercaseTL);
+    // var_dump($score);
 
     // On vérifie enfin si le mot compte double ou triple et on multiplie de tant si besoin
     if (isset($_GET['doubleWord'])) {
@@ -79,6 +93,7 @@ function countScore($word)
     } else {
         $score = $score;
     }
+    // var_dump($score);
 
     // On retourne le score
     return $score;
@@ -115,13 +130,13 @@ if (!empty($_GET['word'])) {
         une lettre compte double -->
         <div>
             <label for="doubleLettre">Lettre compte double</label>
-            <input type="text" id="doubleLetter" name="doubleLetter" maxlength="1" size="1" value="?">
+            <input type="text" id="doubleLetter" name="doubleLetter" size="1" value="?">
         </div>
 
         <!-- une lettre compte triple -->
         <div>
             <label for="tripleLettre">Lettre compte triple</label>
-            <input type="text" id="tripleLetter" name="tripleLetter" maxlength="1" size="1" value="?">
+            <input type="text" id="tripleLetter" name="tripleLetter" size="1" value="?">
         </div>
 
         <!-- le mot compte douple -->
